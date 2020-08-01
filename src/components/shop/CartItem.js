@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, TouchableNativeFeedback, Plat
 import { Ionicons } from '@expo/vector-icons'
 
 const isAndroid = Platform.OS === 'android' ? true : false;
-export const CartItem = ({onRemove, quantity, title, amount}) => {
+export const CartItem = ({onRemove, quantity, title, amount, deletable}) => {
     const TouchableComp = (isAndroid && Platform.Version >= 21) ? TouchableNativeFeedback : TouchableOpacity
     return (
         <View style={styles.cardItem}>
@@ -12,10 +12,11 @@ export const CartItem = ({onRemove, quantity, title, amount}) => {
                 <Text style={styles.mainText}>{title}</Text>
             </View>
             <View style={styles.itemData}>
-                <Text style={styles.mainText}>${amount}  </Text>
-                <TouchableComp onPress={onRemove} style={styles.deleteButton}>
-                    <Ionicons name={isAndroid ? 'md-trash' : 'ios-trash'} size={23} color={'red'}/>
-                </TouchableComp>
+                <Text style={styles.mainText}>${amount.toFixed(2)}  </Text>
+                {deletable && 
+                    <TouchableComp onPress={onRemove} style={styles.deleteButton}>
+                        <Ionicons name={isAndroid ? 'md-trash' : 'ios-trash'} size={23} color={'red'}/>
+                    </TouchableComp>}
             </View>
         </View>
     );
