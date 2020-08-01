@@ -1,14 +1,14 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, Button, TouchableOpacity, TouchableNativeFeedback, Platform } from 'react-native'
-import { Colours } from '../../constants/Colours';
+import { View, Text, StyleSheet, Image, TouchableOpacity, TouchableNativeFeedback, Platform } from 'react-native';
+import { Card } from '../UI/Card';
 
 const isAndroid = Platform.OS === 'android' ? true : false;
-export const ProductItem = ({title, price, image, onViewDetial, addToCart}) => {
+export const ProductItem = ({title, price, image, onSelect, children}) => {
     const TouchableComp = (isAndroid && Platform.Version >= 21) ? TouchableNativeFeedback : TouchableOpacity
     return (
-        <View style={styles.product}>
+        <Card style={styles.product}>
             <View style={styles.touchable}>
-                <TouchableComp onPress={onViewDetial} useForeground>
+                <TouchableComp onPress={onSelect} useForeground>
                     <View>
                         <View style={styles.imageContainer}>
                             <Image style={styles.image} source={{uri: image}}/>
@@ -18,28 +18,17 @@ export const ProductItem = ({title, price, image, onViewDetial, addToCart}) => {
                             <Text style={styles.price}>${price.toFixed(2)}</Text>
                         </View>
                         <View style={styles.buttonContainer}>
-                            <Button color={Colours.PRIMARY} title={'Details'} onPress={onViewDetial}/>
-                            <Button color={Colours.PRIMARY} title={'Add to Cart'} onPress={addToCart}/>
+                            {children}
                         </View>
                     </View>
                 </TouchableComp>
             </View>
-        </View>     
+        </Card>     
     );
 }
 
 const styles = StyleSheet.create({
     product: {
-        shadowColor: 'black',
-        shadowOpacity: 0.26,
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowRadius: 8,
-        elevation: 5,
-        borderRadius: 10,
-        backgroundColor: 'white',
         height: 250,
         margin: 20
     },
@@ -61,12 +50,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        height: '25%',
+        height: '23%',
         paddingHorizontal: 20
     },
     details: {
         alignItems: 'center',
-        height: '15%',
+        height: '17%',
         padding: 10
     },
     imageContainer: {
