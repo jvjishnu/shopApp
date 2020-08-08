@@ -1,6 +1,6 @@
 import React from 'react';
-import { ProductsOverviewScreen, ProductDetailScreen, CartScreen, OrdersScreen, UserProductScreen, EditProductScreen } from '../screens';
-import { createAppContainer } from 'react-navigation';
+import { ProductsOverviewScreen, ProductDetailScreen, CartScreen, OrdersScreen, UserProductScreen, EditProductScreen, AuthScreen, StartupScreen } from '../screens';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { Colours } from '../constants/Colours';
 import { Platform } from 'react-native';
@@ -49,7 +49,7 @@ const UserProductsNavigator = createStackNavigator({
     defaultNavigationOptions: defNavOptions
 });
 
-const sideDrawerNavigator = createDrawerNavigator({
+const SideDrawerNavigator = createDrawerNavigator({
     Products: ProductsNavigator,
     Orders: OrdersNavigator,
     MyProducts: UserProductsNavigator
@@ -59,4 +59,16 @@ const sideDrawerNavigator = createDrawerNavigator({
     }
 });
 
-export const ShopNavigator = createAppContainer(sideDrawerNavigator)
+const AuthNavigator = createStackNavigator({
+    Auth: AuthScreen
+}, {
+    defaultNavigationOptions: defNavOptions
+});
+
+const MainNavigator = createSwitchNavigator({
+    Startup: StartupScreen,
+    Auth: AuthNavigator,
+    Shop: SideDrawerNavigator
+});
+
+export const ShopNavigator = createAppContainer(MainNavigator)

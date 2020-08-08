@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import { cartReducer, productsReducer, ordersReducer } from './store/reducers';
+import { cartReducer, productsReducer, ordersReducer, authReducer } from './store/reducers';
 import { ShopNavigator } from './navigation/ShopNavigator';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
@@ -10,7 +10,8 @@ import ReduxThunk from 'redux-thunk';
 const rootReducer = combineReducers({
   products: productsReducer,
   cart: cartReducer,
-  orders: ordersReducer
+  orders: ordersReducer,
+  auth: authReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
