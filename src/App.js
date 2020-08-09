@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { cartReducer, productsReducer, ordersReducer, authReducer } from './store/reducers';
-import { ShopNavigator } from './navigation/ShopNavigator';
+import { NavigationContainer } from './navigation/NavigationContainer';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import ReduxThunk from 'redux-thunk';
@@ -32,7 +32,7 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <ShopNavigator />
+      <NavigationContainer />
     </Provider>
   );
 }

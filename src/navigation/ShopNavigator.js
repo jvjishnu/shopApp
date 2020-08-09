@@ -3,9 +3,11 @@ import { ProductsOverviewScreen, ProductDetailScreen, CartScreen, OrdersScreen, 
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { Colours } from '../constants/Colours';
-import { Platform } from 'react-native';
-import { createDrawerNavigator } from 'react-navigation-drawer';
+import { Platform, SafeAreaView, Button, View } from 'react-native';
+import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
 import { Ionicons } from '@expo/vector-icons';
+import { useDispatch } from 'react-redux';
+import { logout } from '../store/actions/authAct';
 
 const isAndroid = Platform.OS === 'android' ? true : false;
 const defNavOptions = {
@@ -56,6 +58,19 @@ const SideDrawerNavigator = createDrawerNavigator({
 }, {
     contentOptions: {
         activeTintColor: Colours.PRIMARY
+    },
+    contentComponent: props => {
+        const dispatch = useDispatch();
+        return (
+            <View style = {{flex: 1, padding: 20 }}>
+                <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
+                    <DrawerItems {...props}/>
+                    <Button title={'Logout'} color={Colours.PRIMARY} onPress={() => {
+                        dispatch(logout());
+                    }}/>
+                </SafeAreaView>
+            </View>
+        )
     }
 });
 
